@@ -1,0 +1,25 @@
+# Putting our compiler specs in one file saves having to change
+# multiple makefiles when we want to recompile with different options.
+# compiler
+
+# Normal Compiler Options (for unit testing)
+# CC = gcc -ansi -Wall -g -DDEBUG
+# Uncomment if you are compiling on Mac OSX
+# CC = gcc -ansi -fnested-functions -Wall -O2
+# Uncomment if you are compiling on HPC
+CC = gcc -ansi -Wall -O2
+CC_NO_OPT = $(CC)
+
+# Profiling Compiler Options
+# CC_NO_OPT = gcc -ansi -Wall -pg -DDEBUG
+# CC = $(CC_NO_OPT) -O2
+
+# Python-library building compiler options
+# CC = gcc -ansi -Wall -g -DDEBUG -fPIC
+
+#LIBPATH = ~/Documents/UofA/SecondaryPrediction/sspred/nnds/lib
+#LIBPATH = ~/ra/final/code9/nnds/lib
+LIBPATH = /extra/skrieger/code/nnds/lib
+
+%.o: %.c
+	$(CC) -iquote $(LIBPATH) -c $<
