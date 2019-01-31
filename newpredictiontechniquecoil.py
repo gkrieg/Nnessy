@@ -1,9 +1,9 @@
 import sys
 from datetime import datetime
-from sklearn import linear_model
-from scipy import optimize
+#from sklearn import linear_model
+#from scipy import optimize
 import random
-import numpy as np
+#import numpy as np
 WORDLEN = 23
 HALFLEN = WORDLEN // 2
 k = 5
@@ -56,151 +56,6 @@ def logisticCurve2(distance,filename):
     slope = float(fi[0].split()[0][2:-2])
     intercept = float(fi[0].split()[1])
     return logistic_function((distance - intercept) * slope)
-
-def getpoint(y, j,As,notAs):
-    margin = 200
-    total = 0
-    totala = 0
-    totalnona = 0
-    for i in range(j-margin,j+margin + 1):
-        if y[i] == 1:
-            #totala += 1.0
-            totala += 1.0/As
-        else:
-            #totalnona += 1.0
-            totalnona += 1.0/notAs
-        #total += 1 if y[i] == 1 else 0
-    return totala / (totala + totalnona)
-
-def meancenter(X,y,As,notAs):
-    margin=200
-    zerolist = []
-    X,y = makeeven(X,y)
-    X,y = sortxy(X,y)
-    print(X)
-    print(y)
-    As = len(sum(np.where(y == 1)))
-    notAs = len(sum(np.where(y == 0)))
-    for i in range(margin,len(X) - margin):
-        #print(getpoint(ny,i,As,notAs))
-        if abs(getpoint(y,i,As,notAs) - .5) < .01:
-            zerolist.append(X[i])
-    print(zerolist)
-    m = sum(zerolist) / len(zerolist)
-    #m = sum(X) / len(X)
-    X = X - m
-    return X,y,m
-
-def makeeven(X,y):
-    zeroes = np.where(y == 0)
-    ones = np.where(y == 1)
-    smaller = len(zeroes[0]) if len(zeroes[0]) < len(ones[0]) else len(ones[0])
-    print('smaller',smaller)
-    print('sums',np.sum(y==1))
-    print(np.sum(y==0))
-    zeroes = np.asarray(random.sample(np.where(y == 0)[0].tolist(),smaller))
-    Xtotal = np.append(ones, zeroes)
-    X = X[Xtotal]
-    y = y[Xtotal]
-    
-
-    return X,y
-
-def sortxy(X,y):
-    XY = [(X[i],y[i]) for i in range(len(X))]
-    XY.sort()
-    X = [XY[i][0] for i in range(len(XY))]
-    y = [XY[i][1] for i in range(len(XY))]
-    return np.asarray(X),np.asarray(y)
-
-def writeLogisticCurves(filename,outfilename,dirnum):
-    inlines = open(filename,'r').readlines()
-    alphasorted = []
-    for line in inlines:
-        adist = line.split(',')[0][1:]
-        bdist = line.split(',')[1]
-        cdist = line.split(',')[2]
-        ttype = line.split(',')[3][:-2]
-        alphasorted.append((adist,bdist,cdist,ttype))
-    outfile = open('{}.alpha'.format(outfilename),'w')
-    outfile2 = open('{}.beta'.format(outfilename),'w')
-    outfile3 = open('{}.coil'.format(outfilename),'w')
-    X = []
-    y1 = []
-    y2 = []
-    X2 = []
-    y3 = []
-    X3 = []
-    for i,thing in enumerate(alphasorted):
-        if i%50 == 0:
-            if float(thing[0]) > .1:
-                X.append(float(thing[0]))
-                y1.append(1 if thing[3] == 'A' else 0)
-            if float(thing[1]) > .1:
-                y2.append(1 if thing[3] == 'B' else 0)
-                X2.append(float(thing[1]))
-            if float(thing[2]) > .1:
-                y3.append(1 if thing[3] == 'C' else 0)
-                X3.append(float(thing[2]))
-    X = np.asarray(X)
-    y1 = np.asarray(y1)
-    y2 = np.asarray(y2)
-    y3 = np.asarray(y3)
-    X3 = np.asarray(X3)
-    X2 = np.asarray(X2)
-    countA = np.sum(y1 == 1)
-    othercountA = len(np.where(y1 == 1)[0])
-    print(othercountA,np.sum(y1 == 0))
-    countB = np.sum(y2 == 1)
-    countC = np.sum(y3 == 1)
-
-    othercountB = len(np.where(y2 == 1)[0])
-    print(othercountB,np.sum(y2 == 0))
-    As = np.where(y1 == 1)
-    Bs = np.where(y2 == 1)
-    Cs = np.where(y3 == 1)
-    print('countA and countB',countA,countB)
-    nonAs = np.asarray(random.sample(np.where(y1 == 0)[0].tolist(),countA))
-    nonBs = np.asarray(random.sample(np.where(y2 == 0)[0].tolist(),countB))
-    nonCs = np.asarray(random.sample(np.where(y3 == 0)[0].tolist(),countC))
-    X,y1,m = meancenter(X,y1,len(nonAs),len(nonAs))
-    X2,y2,m2 = meancenter(X2,y2,len(nonBs),len(nonBs))
-    X3,y3,m3 = meancenter(X3,y3,len(nonCs),len(nonCs))
-    Atotal = np.append(As , nonAs)
-    Btotal = np.append(Bs,nonBs)
-    Ctotal = np.append(Cs,nonCs)
-    print(Atotal)
-    #X = X[Atotal]
-    #X2 = X2[Btotal]
-    #X3 = X3[Ctotal]
-    #y1 = y1[Atotal]
-    #y2 = y2[Btotal]
-    #y3 = y3[Ctotal]
-    print('Bs',Bs,len(Bs))
-    X = X.reshape((len(X),1))
-    X2 = X2.reshape((len(X2),1))
-    X3 = X3.reshape((len(X3),1))
-    y1 = y1.reshape((len(y1),1))
-    y2 = y2.reshape((len(y2),1))
-    y3 = y3.reshape((len(y3),1))
-    #clf1 = linear_model.LogisticRegression(fit_intercept=True)
-    #clf2 = linear_model.LogisticRegression(fit_intercept=True)
-    #clf3 = linear_model.LogisticRegression(fit_intercept=True)
-    clf1 = linear_model.LogisticRegression(C=1e5,fit_intercept=False)
-    clf2 = linear_model.LogisticRegression(C=1e5,fit_intercept=False)
-    clf3 = linear_model.LogisticRegression(C=1e5,fit_intercept=False)
-    clf1.fit(X,y1)
-    clf2.fit(X2,y2)
-    clf3.fit(X3,y3)
-    print(clf1.coef_,m)
-    print(clf2.coef_,m2)
-    print(clf3.coef_,m3)
-    outfile.write('{0} {1}\n'.format(clf1.coef_,float(m)))
-    outfile2.write('{0} {1}\n'.format(clf2.coef_,float(m2)))
-    outfile3.write('{0} {1}\n'.format(clf3.coef_,float(m3)))
-
-    
-
 
 def mean(numbers):
     return float(sum(numbers)) / max(len(numbers),1)
@@ -347,14 +202,10 @@ def process_args():
     parser.add_argument("inputf", help="the input filename for which you want the class-membership probabilities", type=str, default="predictions/12222/predictknn1.txtss")
     parser.add_argument("outputf", help="the output filename to which you want to write the class-membership probabilities", type=str, default="outtt")
     parser.add_argument("dirnum", help="the directory number", type=str, default='1')
-    parser.add_argument("k", help="the number of neighbors to look at", type=int,default=3)
-    parser.add_argument("-l", help="flag for generating logistic curves", action='store_true')
+    parser.add_argument("k", help="the number of neighbors to look at", type=int,default=5)
     args = parser.parse_args()
     print('k = {}'.format(args.k))
-    if args.l == True:
-        writeLogisticCurves(args.inputf,args.outputf,args.dirnum)
-    else:
-        get_probs(args.inputf,args.outputf,args.dirnum,args.k)
+    get_probs(args.inputf,args.outputf,args.dirnum,args.k)
 
             
 #get_probs('predictions/12222/predictknn1.txtss','outtt')
