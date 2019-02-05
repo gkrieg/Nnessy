@@ -1,3 +1,4 @@
+STILL PUTTING TOGETHER THE GITHUB REPOSITORY.  SHOULD BE DONE BY THE END OF THE DAY February 7, 2019
 To install Nnessy, run:
 
 sh install.sh
