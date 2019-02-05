@@ -14,4 +14,5 @@ seq=${seq}.seq
 ./lpgenerator PredictProteinKnnCoil $rand alpha.words beta.words other.words ${seq} $lenwords ${tag}/${seq}.knn $k $firstitr ${directorynum}
 python getSecondaryStructure.py ${tag}/${seq}.knn ${tag}/${seq}.knnss 
 python newpredictiontechniquecoil.py ${tag}/${seq}.knnss ${tag}/${seq}.probs $tag $k 
-python convertprobabilities.py ${tag}/${seq}.probs $iseq ${tag}/${iseq}.ss
+python newdponprotein.py $iseq ${tag}/${seq}.probs ${tag}/${iseq}.ss
+#python convertprobabilities.py ${tag}/${seq}.probs $iseq ${tag}/${iseq}.ss
