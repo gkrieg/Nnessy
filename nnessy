@@ -22,7 +22,7 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
-
+echo "done parsing args"
 lenwords=23
 numthreads=1
 k=5
@@ -37,8 +37,13 @@ if [ -z ${OUTPUT+x} ]; then
     OUTPUT=${tag}/${iseq}.ss
 fi
 seq=${seq}.seq
-lpgenerator PredictProteinKnnCoil alpha.words beta.words other.words ${seq} $lenwords ${tag}/${seq}.knn $k $firstitr 
+echo "started knn"
+./lpgenerator PredictProteinKnnCoil alpha.words beta.words other.words ${seq} $lenwords ${tag}/${seq}.knn $k $firstitr 
+echo "end knn"
 python getSecondaryStructure.py ${tag}/${seq}.knn ${tag}/${seq}.knnss 
+echo "end ss"
 python overlappingwords.py ${tag}/${seq}.knnss ${tag}/${seq}.probs $tag $k 
+echo "done overlapping"
 python dynamicprogramming.py $iseq ${tag}/${seq}.probs $OUTPUT
+echo "writing output"
 #python convertprobabilities.py ${tag}/${seq}.probs $iseq ${tag}/${iseq}.ss
