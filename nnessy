@@ -20,8 +20,13 @@ while [[ $# -gt 0 ]]; do
             shift
             shift
             ;;
+        *)
+            POSITIONAL+=("$1")
+            shift
+            ;;
     esac
 done
+set -- "${POSITIONAL[@]}"
 echo "done parsing args"
 lenwords=23
 numthreads=1
@@ -38,7 +43,7 @@ fi
 seq=${seq}.seq
 python split.py $seq
 echo "finding identities"
-python getSecondaryStructure.py $seq $seq ${tag}/${seq}.idents $k
+python getSecondaryStructure.py $seq ${tag}/${seq}.idents $seq $k
 echo "started knn"
 ./lpgenerator PredictProteinKnnCoil alpha.words beta.words other.words ${seq} $lenwords ${tag}/${seq}.knn $k $firstitr 
 echo "end knn"
