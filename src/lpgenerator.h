@@ -70,7 +70,6 @@ public:
 		lpGenerator::lengthOfWord = wordlength;
         printf("wordlength is: %d",wordlength);
 		lpGenerator::onlyone = onlyone;
-		cout << numClasses << " " << k << " " << l << " " << TRSSize << endl;
 		AANeighbors = NULL;
 		ABNeighbors = NULL;
 		BBNeighbors = NULL;

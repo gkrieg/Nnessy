@@ -174,11 +174,11 @@ void nnFinder::loadDispersionTree(FILE *queriedWords, string filenamestring, str
     cdf[coildfstring.size()] = '\0';
     //alphadf = adf;
     //betadf = bdf;
-    cout << endl << "setting distance functions with rand = " << rand << endl;
+    //cout << endl << "setting distance functions with rand = " << rand << endl;
     setdfs(adf,bdf);
     int cset = setcoildf(cdf);
-    cout << endl << "cset " << cset << endl;
-    cout << "done setting distance functions" << endl;
+    //cout << endl << "cset " << cset << endl;
+    //cout << "done setting distance functions" << endl;
 	if (type == "alpha"){
 		MSQueriedWords->dist = wordDist2Alpha;
 		AlphaDT = readDispersionTreeFromFile(MSQueriedWords->points, MSQueriedWords->dist, MSQueriedWords->numpoints, filename);
@@ -259,7 +259,7 @@ void nnFinder::saveDispersionTree(char* filename, string type){
 }
 void nnFinder::queryAlpha(int numNeighbors, MetricSpace *MS, Pointer*** AllNeighbors, int treenum){
 	const int nump = MS->numpoints;
-	cout << "numpoints alpha is " << nump << endl;
+	//cout << "numpoints alpha is " << nump << endl;
 	(*AllNeighbors) = new Pointer*[nump];
 	for (int numrows = 0; numrows < nump; numrows++){
 		(*AllNeighbors)[numrows] = new Pointer[numNeighbors];
@@ -276,12 +276,12 @@ void nnFinder::queryAlpha(int numNeighbors, MetricSpace *MS, Pointer*** AllNeigh
 			num = knnSearch(AlphaDT3, words[i], numNeighbors, (*AllNeighbors)[i]);
 
 	}
-	cout << i << endl << num << endl;
+	//cout << i << endl << num << endl;
 
 }
 void nnFinder::queryCoil(int numNeighbors, MetricSpace *MS, Pointer*** AllNeighbors, int treenum){
 	const int nump = MS->numpoints;
-	cout << "numpoints coil is " << nump << endl;
+	//cout << "numpoints coil is " << nump << endl;
 	(*AllNeighbors) = new Pointer*[nump];
 	for (int numrows = 0; numrows < nump; numrows++){
 		(*AllNeighbors)[numrows] = new Pointer[numNeighbors];
@@ -293,12 +293,12 @@ void nnFinder::queryCoil(int numNeighbors, MetricSpace *MS, Pointer*** AllNeighb
         num = knnSearch(CoilDT, words[i], numNeighbors, (*AllNeighbors)[i]);
 
 	}
-	cout << i << endl << num << endl;
+	//cout << i << endl << num << endl;
 
 }
 void nnFinder::queryBeta(int numNeighbors, MetricSpace *MS, Pointer*** AllNeighbors, int treenum){
 	const int nump = MS->numpoints;
-	cout << "numpoints is " << nump << endl;
+	//cout << "numpoints is " << nump << endl;
 	(*AllNeighbors) = new Pointer*[nump];
 	for (int numrows = 0; numrows < nump; numrows++){
 		(*AllNeighbors)[numrows] = new Pointer[numNeighbors];
@@ -315,7 +315,7 @@ void nnFinder::queryBeta(int numNeighbors, MetricSpace *MS, Pointer*** AllNeighb
 			num = knnSearch(BetaDT3, words[i], numNeighbors, (*AllNeighbors)[i]);
 
 	}
-	cout << i << endl << num << endl;
+	//cout << i << endl << num << endl;
 }
 
 /*void nnFinder::printDFs(){

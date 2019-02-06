@@ -363,9 +363,6 @@ float GetWeight(int lengthOfWord, int offset){
                 weights[i] = 1.0 / normalizer;
             weights[i] = (double)pow(aarho,abs(halflen - i)) / normalizer;
         }
-        for (int i = 0; i < lengthOfWord;i++){
-            printf("%f\n",weights[i]);
-        }
     }
     return weights[offset];
 
@@ -387,7 +384,6 @@ void readinweights(int lengthOfWord,const char* filename){
         fscanf(infile,"%lf",&readweights[i]);
         printf("weight %d = %f\n",i,readweights[i]);
     }
-    printf ("finished weighting\n");
 }
 
 void readDistanceFunction(char* filename,int type){
@@ -1137,7 +1133,6 @@ void setdfs(char* alphadfname, char* betadfname){
 int setcoildf(char* coildfname){
     if(access(coildfname, F_OK) != -1){
         coildf = coildfname;
-        fprintf(stdout,"coil df set to coildfname\n");
     }
     else{
         fprintf(stderr,"coil distance function file %s does not exist\n",coildfname);

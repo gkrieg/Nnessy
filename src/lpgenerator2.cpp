@@ -59,7 +59,6 @@ void lpGenerator::predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* Co
   FILE* alphaFile = fopen(AlphaInputFile, r.c_str());
   FILE* betaFile = fopen(BetaInputFile, r.c_str());
   FILE* coilFile = fopen(CoilInputFile, r.c_str());
-  cout << "###################################" << BetaIF << endl;
   Distance alphadistfunc;
   Distance betadistfunc;
   Distance coildistfunc;

@@ -1,16 +1,44 @@
 #!/bin/bash
 
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+    key="$1"
+
+    case $key in
+        -i|--input)
+            seq="$2"
+            shift
+            shift
+            ;;
+        -o|--output)
+            OUTPUT="$2"
+            shift
+            shift
+            ;;
+        -n|--numthreads)
+            numthreads="$2"
+            shift
+            shift
+            ;;
+    esac
+done
+
 lenwords=23
 numthreads=1
 k=5
 firstitr=1
 tag=output
-seq=$1
+if [ -z ${seq+x} ]; then
+    seq=$1
+fi
 python split.py $seq
 iseq=$seq
+if [ -z ${OUTPUT+x} ]; then
+    OUTPUT=${tag}/${iseq}.ss
+fi
 seq=${seq}.seq
 lpgenerator PredictProteinKnnCoil alpha.words beta.words other.words ${seq} $lenwords ${tag}/${seq}.knn $k $firstitr 
 python getSecondaryStructure.py ${tag}/${seq}.knn ${tag}/${seq}.knnss 
 python overlappingwords.py ${tag}/${seq}.knnss ${tag}/${seq}.probs $tag $k 
-python dynamicprogramming.py $iseq ${tag}/${seq}.probs ${tag}/${iseq}.ss
+python dynamicprogramming.py $iseq ${tag}/${seq}.probs $OUTPUT
 #python convertprobabilities.py ${tag}/${seq}.probs $iseq ${tag}/${iseq}.ss
