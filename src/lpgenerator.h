@@ -68,7 +68,6 @@ public:
 		lpGenerator::l = l;
 		lpGenerator::TRSSize = TRSSize;
 		lpGenerator::lengthOfWord = wordlength;
-        printf("wordlength is: %d",wordlength);
 		lpGenerator::onlyone = onlyone;
 		AANeighbors = NULL;
 		ABNeighbors = NULL;

@@ -382,7 +382,6 @@ void readinweights(int lengthOfWord,const char* filename){
     readweights = (double*) malloc(sizeof(double) * lengthOfWord);
     for (int i = 0;i < lengthOfWord;i++){
         fscanf(infile,"%lf",&readweights[i]);
-        printf("weight %d = %f\n",i,readweights[i]);
     }
 }
 
