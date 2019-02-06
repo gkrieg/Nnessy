@@ -31,17 +31,20 @@ tag=output
 if [ -z ${seq+x} ]; then
     seq=$1
 fi
-python split.py $seq
 iseq=$seq
 if [ -z ${OUTPUT+x} ]; then
     OUTPUT=${tag}/${iseq}.ss
 fi
 seq=${seq}.seq
+python split.py $seq
+echo "finding identities"
+python getSecondaryStructure.py $seq $seq ${tag}/${seq}.idents $k
 echo "started knn"
 ./lpgenerator PredictProteinKnnCoil alpha.words beta.words other.words ${seq} $lenwords ${tag}/${seq}.knn $k $firstitr 
 echo "end knn"
 python getSecondaryStructure.py ${tag}/${seq}.knn ${tag}/${seq}.knnss 
 echo "end ss"
+python identstitch.py ${tag}/${seq}.idents ${tag}/${seq}.knnss ${tag}/${seq}.knnss $k
 python overlappingwords.py ${tag}/${seq}.knnss ${tag}/${seq}.probs $tag $k 
 echo "done overlapping"
 python dynamicprogramming.py $iseq ${tag}/${seq}.probs $OUTPUT

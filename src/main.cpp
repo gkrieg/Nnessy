@@ -38,18 +38,6 @@ int main(int argc, char* argv[]) {
 		lpGenerator lpgen = lpGenerator(numclasses, 0, 0, 0, wordlength, true);
 		lpgen.predictProteinWithKNNCoil(Tree, BetaTree,CoilTree,  Query , outfile, numneighbors,isFirstIteration);
     }
-    else if (strcmp(argv[1],"SaveTreesDefaultCoilWeighted") == 0) {
-        int rand = atoi(argv[2]);
-		char* alpha = argv[3];
-		char* beta = argv[4];
-		char* coil = argv[5];
-		char* alphaSaveTo = argv[6];
-		char* betaSaveTo = argv[7];
-		char* coilSaveTo = argv[8];
-        int wordlen = atoi(argv[9]);
-		lpGenerator lpgen = lpGenerator(0,0,0,0,wordlen,true);
-		lpgen.buildSaveTreesCoilDefault(alpha, beta,coil, alphaSaveTo, betaSaveTo,coilSaveTo, rand,true);
-	}
     else{
         cout << "Error in function call" << endl;
     }

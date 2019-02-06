@@ -15,40 +15,10 @@
 #include <iostream>
 #include <map>
 #include <unistd.h>
-#include <thread>
 #include <stdlib.h>
 #include <string.h>
 using namespace std;
-void lpGenerator::buildSaveTreesCoilDefault(char* alpha, char* beta,char* coil, char* alphaSave, char* betaSave,char* coilSave,int rand,bool weights) {
-  const char* AlphaInputFile = (const char* ) alpha;
-  const char* BetaInputFile = (const char* ) beta;
-  const char* CoilInputFile = (const char* ) coil;
-  string r = "r";
-  FILE* alphaFile = fopen(AlphaInputFile, r.c_str());
-  FILE* betaFile = fopen(BetaInputFile, r.c_str());
-  FILE* coilFile = fopen(CoilInputFile, r.c_str());
-  setEpsilonRho(1,0.9,0.3);
-  if (weights){
-      string weightsfilename = "weights" + to_string(rand) + ".txt";
-      readinweights(this->lengthOfWord,weightsfilename.c_str());
-      thread alphatree(&lpGenerator::buildalphatreeweighted, this, alphaFile, 1, true, rand);
-      thread betatree(&lpGenerator::buildbetatreeweighted, this, betaFile, 1, true, rand);
-      thread coiltree(&lpGenerator::buildcoiltreeweighted, this, coilFile, 1, true, rand);
-      alphatree.join();
-      betatree.join();
-      coiltree.join();
-  }else{
-      thread alphatree(&lpGenerator::buildalphatree, this, alphaFile, 1, true, rand);
-      thread betatree(&lpGenerator::buildbetatree, this, betaFile, 1, true, rand);
-      thread coiltree(&lpGenerator::buildcoiltree, this, coilFile, 1, true, rand);
-      alphatree.join();
-      betatree.join();
-      coiltree.join();
-  }
-  nnfinder1.saveDispersionTree(alphaSave, "alpha");
-  nnfinder4.saveDispersionTree(betaSave, "beta");
-  nnfinder7.saveDispersionTree(coilSave, "coil");
-}
+
 void lpGenerator::predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* CoilIF, char* ProteinIF, string filename, int numneighbors, bool firstIteration) {
 
   int rand = 1;
