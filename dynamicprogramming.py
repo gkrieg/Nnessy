@@ -273,7 +273,8 @@ import sys
     #exit()
 out = open(sys.argv[3],'w')
 inf = open(sys.argv[1],'r')
-out.write(inf.readlines())
+for line in inf:
+    out.write(line)
 inf.close()
 import traceback
 rand = sys.argv[1]

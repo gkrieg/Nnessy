@@ -3,6 +3,7 @@ from datetime import datetime
 #from sklearn import linear_model
 #from scipy import optimize
 import random
+import math
 #import numpy as np
 WORDLEN = 23
 HALFLEN = WORDLEN // 2
@@ -16,14 +17,15 @@ def f(x):
     l = WORDLEN #this is the word length
     if abs(x) <= addrange // 2:
         if x == 0:
-            return (addfactor + 1)/(l+addfactor)
+            return ((addfactor + 1)*1.0)/(l+addfactor)
         else:
-            return 1/(l+addfactor)
+            return 1.0/(l+addfactor)
     else:
         return 0
 
 def logistic_function(x):
-    return 1/(1+np.exp(-x))
+    return 1/(1+math.exp(-x))
+    #return 1/(1+np.exp(-x))
 
 def logisticCurve2(distance,filename):
     #read in the logistic curve values
