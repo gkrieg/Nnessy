@@ -49,8 +49,9 @@ void lpGenerator::buildSaveTreesCoilDefault(char* alpha, char* beta,char* coil, 
   nnfinder4.saveDispersionTree(betaSave, "beta");
   nnfinder7.saveDispersionTree(coilSave, "coil");
 }
-void lpGenerator::predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* CoilIF, char* ProteinIF, string filename, int numneighbors, int rand, bool firstIteration, int dirnum) {
+void lpGenerator::predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* CoilIF, char* ProteinIF, string filename, int numneighbors, bool firstIteration) {
 
+  int rand = 1;
   const char* AlphaInputFile = (const char* ) AlphaIF;
   const char* BetaInputFile = (const char* ) BetaIF;
   const char* CoilInputFile = (const char* ) CoilIF;
@@ -73,23 +74,20 @@ void lpGenerator::predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* Co
   lpGenerator::TRSSize = MSAlpha->numpoints;
 
   if (firstIteration){
-      string weightsfilename = "weights" + to_string(rand) + ".txt";
+      string weightsfilename = "weights.txt";
       readinweights(this->lengthOfWord,weightsfilename.c_str());
       alphadistfunc = WeightedWordDist;
       betadistfunc = WeightedWordDist;
       coildistfunc = WeightedWordDist;
-      nnfinder1.loadDispersionTree(alphaFile, "trees/alpha" + to_string(rand) + to_string(dirnum) + ".tree", "defaultaw",rand);
+      nnfinder1.loadDispersionTree(alphaFile, "trees/alpha.tree", "defaultaw",rand);
       nnfinder1.queryAlpha(numneighbors, MSAlpha, &this->AANeighbors, 1);
       nnfinder1.destroyDTree('A');
-      nnfinder4.loadDispersionTree(betaFile, "trees/beta" + to_string(rand) + to_string(dirnum) + ".tree","defaultbw",rand);
+      nnfinder4.loadDispersionTree(betaFile, "trees/beta.tree","defaultbw",rand);
       nnfinder4.queryBeta(numneighbors, MSAlpha, &this->BBNeighbors, 1);
       nnfinder4.destroyDTree('B');
-      printf("Destroyed the beta tree\n");
-      nnfinder7.loadDispersionTree(coilFile, "trees/coil" + to_string(rand) + to_string(dirnum) + ".tree","defaultcw",rand);
+      nnfinder7.loadDispersionTree(coilFile, "trees/coil.tree","defaultcw",rand);
       nnfinder7.queryCoil(numneighbors, MSAlpha, &this->CCNeighbors, 1);
-      printf("before Destroyed the coil tree\n");
       nnfinder7.destroyDTree('C');
-      printf("Destroyed the coil tree\n");
   }
   else{
       nnfinder1.loadDispersionTree(alphaFile, "trees/alpha" + to_string(rand) + ".tree", "alpha",rand);

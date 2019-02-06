@@ -172,7 +172,7 @@ void findNeighborsOneClassTwoDistanceAveLoadCoil(char* AlphaIF, char* BetaIF,cha
 	void predictProteinLoadTreeDefaultCoil(char* AlphaIF, char* BetaIF,char* CoilIF, char* ProteinIF,  double, double, std::string, int, int rand, std::string Treefile1,std::string Treefile2,std::string Treefile3, bool parallel, bool weights, bool training);
 	void predictProteinLoadTreeCoil(char* AlphaIF, char* BetaIF,char* CoilIF, char* ProteinIF,  double, double, std::string, int, int rand, std::string Treefile1,std::string Treefile2,std::string Treefile3, bool parallel, bool weights, bool training);
 	void predictProteinWithKNN(char* AlphaIF, char* BetaIF, char* ProteinIF,  double, double, std::string, int, int rand);
-	void predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* CoilIF, char* ProteinIF, std::string, int, int rand,bool firstIteration, int dirnum);
+	void predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* CoilIF, char* ProteinIF, std::string, int,bool firstIteration);
 	void combineFiles();
 	void writeErrorFunctionsFromFiles(ofstream* output);
 	void threadalphafunc(int k, MetricSpace* MS, Pointer*** Neighbors, int treenum) {

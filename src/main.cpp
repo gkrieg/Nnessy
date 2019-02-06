@@ -21,24 +21,22 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     if (strcmp(argv[1],"PredictProteinKnnCoil") == 0) {
-        int rand = atoi(argv[2]);
-		char* Tree = argv[3];
-		char* BetaTree = argv[4];
-		char* CoilTree = argv[5];
-		char* Query = argv[6];
+		char* Tree = argv[2];
+		char* BetaTree = argv[3];
+		char* CoilTree = argv[4];
+		char* Query = argv[5];
         int numclasses = 3;
-		int wordlength = atoi(argv[7]);
-		string outfile = argv[8];
-        int numneighbors = atoi(argv[9]);
-		int firstIteration = atoi(argv[10]);
-        int dirnum = atoi(argv[11]);
+		int wordlength = atoi(argv[6]);
+		string outfile = argv[7];
+        int numneighbors = atoi(argv[8]);
+		int firstIteration = atoi(argv[9]);
 		bool isFirstIteration;
         if (firstIteration == 1)
             isFirstIteration = true;
         else
             isFirstIteration = false;
 		lpGenerator lpgen = lpGenerator(numclasses, 0, 0, 0, wordlength, true);
-		lpgen.predictProteinWithKNNCoil(Tree, BetaTree,CoilTree,  Query , outfile, numneighbors, rand,isFirstIteration, dirnum);
+		lpgen.predictProteinWithKNNCoil(Tree, BetaTree,CoilTree,  Query , outfile, numneighbors,isFirstIteration);
     }
     else if (strcmp(argv[1],"SaveTreesDefaultCoilWeighted") == 0) {
         int rand = atoi(argv[2]);
