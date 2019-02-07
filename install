@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mkdir output
 cd src
 echo "Making lpgenerator"
 make clean
