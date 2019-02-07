@@ -29,7 +29,8 @@ done
 set -- "${POSITIONAL[@]}"
 echo "done parsing args"
 lenwords=23
-numthreads=1
+#numthreads=1
+lownumthreads=$(( $numthreads - 1 ))
 k=5
 firstitr=1
 tag=output
@@ -40,18 +41,27 @@ iseq=$seq
 if [ -z ${OUTPUT+x} ]; then
     OUTPUT=${tag}/${iseq}.ss
 fi
-seq=${seq}.seq
 python split.py $seq
+seq=${seq}.seq
 echo "finding identities"
 python getSecondaryStructure.py $seq ${tag}/${seq}.idents $seq $k
+python splitfile.py $seq $numthreads
 echo "started knn"
-./lpgenerator PredictProteinKnnCoil alpha.words beta.words other.words ${seq} $lenwords ${tag}/${seq}.knn $k $firstitr 
+for i in `seq 0 $lownumthreads`; do
+    ./lpgenerator PredictProteinKnnCoil alpha.words beta.words other.words ${seq}_${i} $lenwords ${tag}/${seq}.knn_${i} $k $firstitr &
+done
+wait
 echo "end knn"
-python getSecondaryStructure.py ${tag}/${seq}.knn ${tag}/${seq}.knnss 
+for i in `seq 0 $lownumthreads`; do
+    cat ${tag}/${seq}.knn_${i} >> ${tag}/${seq}.knn
+done
+python getSecondaryStructure.py ${tag}/${seq}.knn ${tag}/${seq}.knnss
+echo "catting together knnss"
 echo "end ss"
 python identstitch.py ${tag}/${seq}.idents ${tag}/${seq}.knnss ${tag}/${seq}.knnss $k
 python overlappingwords.py ${tag}/${seq}.knnss ${tag}/${seq}.probs $tag $k 
 echo "done overlapping"
 python dynamicprogramming.py $iseq ${tag}/${seq}.probs $OUTPUT
 echo "writing output"
+rm $seq* ${tag}/${seq}.*
 #python convertprobabilities.py ${tag}/${seq}.probs $iseq ${tag}/${iseq}.ss
