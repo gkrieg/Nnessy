@@ -68,7 +68,9 @@ public:
 		lpGenerator::l = l;
 		lpGenerator::TRSSize = TRSSize;
 		lpGenerator::lengthOfWord = wordlength;
+        printf("wordlength is: %d",wordlength);
 		lpGenerator::onlyone = onlyone;
+		cout << numClasses << " " << k << " " << l << " " << TRSSize << endl;
 		AANeighbors = NULL;
 		ABNeighbors = NULL;
 		BBNeighbors = NULL;
@@ -137,6 +139,7 @@ public:
 		}
 	}
 	void findNeighbors(char* AlphaInputFile, char* BetaInputFile, char* AlphaTS, char* BetaTS, char* CoilTS, bool firstIteration, int rand);
+    void testDF(int,char*,char*);
     void printDFs();
 	void createMapping();
 	void writeObjectiveFunction(string alphaTSname, string betaTSname, string coilTSname, ofstream* output, int t_ssize);
@@ -161,6 +164,7 @@ void findNeighborsOneClassTwoDistanceAveLoadCoil(char* AlphaIF, char* BetaIF,cha
     void setshift(float s);
 	void buildSaveTrees(char* alpha, char* beta, char* alphaSave, char* betaSave, int rand,bool weights);
 	void buildSaveTreesCoil(char* alpha, char* beta,char* coil, char* alphaSave, char* betaSave,char* coilSave, int rand,bool weights);
+	void buildSStrees(char* alpha, char* beta,char* coil, char* alphaSave, char* betaSave,char* coilSave, int rand,bool weights);
 	void buildSaveTreesDefault(char* alpha, char* beta, char* alphaSave, char* betaSave, int rand,bool weights);
 	void buildSaveTreesCoilDefault(char* alpha, char* beta,char* coil, char* alphaSave, char* betaSave,char* coilSave, int rand,bool weights);
 	void predict(char*, char*, char*, char, double, double, string, int rand);
@@ -170,9 +174,51 @@ void findNeighborsOneClassTwoDistanceAveLoadCoil(char* AlphaIF, char* BetaIF,cha
 	void predictProteinLoadTreeDefaultCoil(char* AlphaIF, char* BetaIF,char* CoilIF, char* ProteinIF,  double, double, std::string, int, int rand, std::string Treefile1,std::string Treefile2,std::string Treefile3, bool parallel, bool weights, bool training);
 	void predictProteinLoadTreeCoil(char* AlphaIF, char* BetaIF,char* CoilIF, char* ProteinIF,  double, double, std::string, int, int rand, std::string Treefile1,std::string Treefile2,std::string Treefile3, bool parallel, bool weights, bool training);
 	void predictProteinWithKNN(char* AlphaIF, char* BetaIF, char* ProteinIF,  double, double, std::string, int, int rand);
-	void predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* CoilIF, char* ProteinIF, std::string, int,bool firstIteration);
+	void predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* CoilIF, char* ProteinIF, std::string, int, int rand,bool firstIteration, int dirnum,bool ss,bool weights,bool dirr);
+    void gettargetsdist(int);
 	void combineFiles();
 	void writeErrorFunctionsFromFiles(ofstream* output);
+    void getnewtargets(int);
+	void threadalphafunc(int k, MetricSpace* MS, Pointer*** Neighbors, int treenum) {
+
+		if (treenum == 1)
+			nnfinder1.queryAlpha(k, MS, Neighbors, treenum);
+		else if (treenum == 2)
+			nnfinder2.queryAlpha(k, MS, Neighbors, treenum);
+		else if (treenum == 3)
+			nnfinder3.queryAlpha(k, MS, Neighbors, treenum);
+		cout << "donethreadalphafunc" << endl;
+	}
+	void threadbetafunc(int k, MetricSpace* MS, Pointer*** Neighbors, int treenum) {
+		if (treenum == 1)
+			nnfinder4.queryBeta(k, MS, Neighbors, treenum);
+		else if (treenum == 2)
+			nnfinder5.queryBeta(k, MS, Neighbors, treenum);
+		else if (treenum == 3)
+			nnfinder6.queryBeta(k, MS, Neighbors, treenum);
+		cout << "donethreadbetafunc" << endl;
+	}
+	/*void* threadalphafunc2(void* tdp) {
+        threaddata td = (struct threaddata) tdp;
+		if (td.treenum == 1)
+			nnfinder1.queryAlpha(td.numneighbors, td.MSAlpha, td.writespace, td.treenum);
+		else if (td.treenum == 2)
+			nnfinder2.queryAlpha(td.numneighbors, td.MSAlpha, td.writespace, td.treenum);
+		else if (td.treenum == 3)
+			nnfinder3.queryAlpha(td.numneighbors, td.MSAlpha, td.writespace, td.treenum);
+		cout << "donethreadalphafunc" << endl;
+	}
+    
+	void threadbetafunc2(int k, MetricSpace* MS, Pointer*** Neighbors, int treenum) {
+		if (treenum == 1)
+			nnfinder4.queryBeta(k, MS, Neighbors, treenum);
+		else if (treenum == 2)
+			nnfinder5.queryBeta(k, MS, Neighbors, treenum);
+		else if (treenum == 3)
+			nnfinder6.queryBeta(k, MS, Neighbors, treenum);
+		cout << "donethreadbetafunc" << endl;
+	}
+    */
 	void buildalphatree(FILE* alphaFile, int num, bool firstIteration,int rand) {
 		if (num == 1)
 			nnfinder1.makeDispersionTree(alphaFile, "alpha", num, firstIteration,rand);
@@ -236,6 +282,10 @@ void findNeighborsOneClassTwoDistanceAveLoadCoil(char* AlphaIF, char* BetaIF,cha
 	}
 	void buildcoiltreeweighted(FILE* coilFile, int num, bool firstIteration,int rand) {
         nnfinder7.makeDispersionTree(coilFile, "coilweighted", num, firstIteration,rand);
+		cout << "donebuilcoilwtree" << endl;
+	}
+	void buildcombinedcoiltree(FILE* coilFile, int num, bool firstIteration,int rand) {
+        nnfinder7.makeDispersionTree(coilFile, "coilcombined", num, firstIteration,rand);
 		cout << "donebuilcoilwtree" << endl;
 	}
 };

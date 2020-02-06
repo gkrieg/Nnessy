@@ -1,0 +1,48 @@
+include ../CompilerOptions.in
+
+all: knn.c dispersionTree.o metricspaces.o word.o r32_point.o partition.o binaryHeapTieBreaker.o compoundHeap.o heap.o lpgenerator.o lpgenerator
+lpgenerator:  main.o
+	g++ -g -Wall -std=c++0x -pthread -o lpgenerator lpgenerator2.o ../nnquery/nnFinder.o $(spot)/word.o $(spot)/metricspaces.o $(spot)/binaryHeapTieBreaker.o $(spot)/compoundHeap.o $(spot)/heap.o $(spot)/r32_point.o $(spot)/partition.o $(spot)/dispersionTree.o main.o
+	
+lpgenerator.o: main.cpp lpgenerator2.cpp
+	g++ -g -Wall -std=c++0x -pthread -c main.cpp lpgenerator2.cpp -I $(spot)/ -I ../nnquery/
+ 
+clean:
+	rm *.o lpgenerator
+	#g++ -g -Wall -std=c++0x -pthread -o lpgenerator lpgenerator2.o Finder.o $(spot)/metricspaces.o $(spot)/word.o $(spot)/binaryHeapTieBreaker.o $(spot)/compoundHeap.o $(spot)/heap.o $(spot)/r32_point.o $(spot)/partition.o $(spot)/dispersionTree.o main.o
+
+#CC = gcc -g -Wall -O3
+CC = gcc -g -Wall 
+LIBS = -lm
+
+module: knn.c dispersionTree.o metricspaces.o word.o r32_point.o partition.o binaryHeapTieBreaker.o compoundHeap.o heap.o
+
+	$(CC) -o knn knn.c dispersionTree.o metricspaces.o word.o r32_point.o partition.o binaryHeapTieBreaker.o compoundHeap.o heap.o $(LIBS)
+
+dispersionTree.o: dispersionTree.h dispersionTree.c
+	$(CC) -c dispersionTree.c
+
+metricspaces.o: metricspaces.h metricspaces.c
+	$(CC) -c metricspaces.c
+
+partition.o: partition.h partition.c
+	$(CC) -c partition.c
+
+binaryHeapTieBreaker.o: binaryHeapTieBreaker.h  binaryHeapTieBreaker.c
+	$(CC) -c binaryHeapTieBreaker.c
+
+compoundHeap.o: compoundHeap.h compoundHeap.c
+	$(CC) -c compoundHeap.c
+
+heap.o: heap.h heap.c
+	$(CC) -c heap.c	
+
+# two example distance functions
+word.o: word.h word.c
+	$(CC) -c word.c
+
+r32_point.o: r32_point.c r32_point.h
+	$(CC) -c r32_point.c
+
+clean:
+	rm *.o 

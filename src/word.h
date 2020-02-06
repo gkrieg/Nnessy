@@ -31,7 +31,7 @@
 #include "portable.h"
 /* #include "ptree.h" */
 
-#define MAX_WORD_LENGTH 50
+#define MAX_WORD_LENGTH 80
 
 typedef char word[ MAX_WORD_LENGTH + 1];
 
@@ -41,6 +41,9 @@ void setShift(float s);
 void WordToString( const Pointer data, char* buffer );
 float WordDist( const Pointer pp, const Pointer qq );
 float WeightedWordDist( const Pointer pp, const Pointer qq );
+float WeightedWordDist2( const Pointer pp, const Pointer qq );
+float SecondaryDist( const Pointer pp, const Pointer qq );
+float SecondaryDist2( const Pointer pp, const Pointer qq );
 float PrivateWordDist( const char* pp, const char* qq );
 float CombinedWordDist(const Pointer p, const Pointer q);
 float CombinedAlphaDistance(const Pointer p, const Pointer q);

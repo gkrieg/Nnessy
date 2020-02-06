@@ -28,12 +28,12 @@ private:
   DispersionTree* BetaDT;
   DispersionTree* BetaDT2;
   DispersionTree* BetaDT3;
-  DispersionTree* CoilDT;
   MetricSpace* MSAlpha;
   MetricSpace* MSBeta;
 
 public:
 //void printDFs();
+  DispersionTree* CoilDT;
   void makeDispersionTree(FILE *queriedWords,  string type, int num, bool firstIteration, int rand);
   void loadDispersionTree(FILE *queriedWords, string filename, string type, int rand);
   void saveDispersionTree(char* filename, string type);
@@ -41,6 +41,9 @@ public:
   void queryAlpha(int numNeighbors,    MetricSpace *MS, Pointer*** AllNeighbors, int treenum  );
   void queryCoil(int numNeighbors,    MetricSpace *MS, Pointer*** AllNeighbors, int treenum  );
   void queryBeta(int numNeighbors  , MetricSpace *MS, Pointer*** AllNeighbors, int treenum  );
+  int queryAlphaRange(int sizeTree,    MetricSpace *MS, Pointer*** AllNeighbors, int treenum  );
+  int queryCoilRange(int sizeTree,    MetricSpace *MS, Pointer*** AllNeighbors, int treenum  );
+  int queryBetaRange(int sizeTree  , MetricSpace *MS, Pointer*** AllNeighbors, int treenum  );
   nnFinder() {
     AlphaDT = NULL;
     AlphaDT2 = NULL;

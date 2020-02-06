@@ -1,0 +1,11 @@
+spot= ../../code/nnds/DispersionTree
+all:  lpgenerator.o lpgenerator
+lpgenerator:  main.o
+	g++ -g -Wall -std=c++0x -pthread -o lpgenerator lpgenerator2.o ../nnquery/nnFinder.o $(spot)/word.o $(spot)/metricspaces.o $(spot)/binaryHeapTieBreaker.o $(spot)/compoundHeap.o $(spot)/heap.o $(spot)/r32_point.o $(spot)/partition.o $(spot)/dispersionTree.o main.o
+	
+lpgenerator.o: main.cpp lpgenerator2.cpp
+	g++ -g -Wall -std=c++0x -pthread -c main.cpp lpgenerator2.cpp -I $(spot)/ -I ../nnquery/
+ 
+clean:
+	rm *.o lpgenerator
+	#g++ -g -Wall -std=c++0x -pthread -o lpgenerator lpgenerator2.o Finder.o $(spot)/metricspaces.o $(spot)/word.o $(spot)/binaryHeapTieBreaker.o $(spot)/compoundHeap.o $(spot)/heap.o $(spot)/r32_point.o $(spot)/partition.o $(spot)/dispersionTree.o main.o

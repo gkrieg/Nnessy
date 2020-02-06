@@ -223,7 +223,7 @@ float c22[22][22] = {
 float c23[22][22] = {
 { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },{ -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 }};
 
-const char* residues = "ARNDCQEGHILKMFPSTWYVBZX-";
+const char* residues = "ARNDCQEGHILKMFPSTWYVBXZ-";
 /* used by WordDist */
 const int ResidueToInt[256] = 
   {
@@ -232,9 +232,9 @@ const int ResidueToInt[256] =
     -1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1,  -1, 23, -1, -1,
     -1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1, 
 /*	     A   B   C    D   E   F   G    H   I   J   K    L   M   N   O */
-    -1,  0, 20,  4,   3,  6, 13,  7,   8,  9, -1, 11,  10, 12,  2, -1, 
+    -1,  0, 21,  4,   3,  6, 13,  7,   8,  9, -1, 11,  10, 12,  2, -1, 
 /*	 P   Q   R   S    T   U   V   W    X   Y   Z                       */
-    14,  5,  1, 15,  16, -1, 19, 17,  21, 18, 21, -1,  -1, -1, -1, -1, 
+    14,  5,  1, 15,  16, -1, 19, 17,  21, 18, 22, -1,  -1, -1, -1, -1, 
     -1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1,
     -1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1, 
 
@@ -255,9 +255,9 @@ const int rtoi[256] =
 	-1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1,  -1,-24, -1, -1,
 	-1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1, 
 /*	     A   B   C    D   E   F   G    H   I   J   K    L   M   N   O */
-	-1,  1, 21,  5,   4,  7, 14,  8,   9, 10, -1, 12,  11, 13,  3, -1, 
+	-1,  1, 22,  5,   4,  7, 14,  8,   9, 10, -1, 12,  11, 13,  3, -1, 
 /*	 P   Q   R   S    T   U   V   W    X   Y   Z                       */
-	15,  6,  2, 16,  17, -1, 20, 18,  22, 19, 22, -1,  -1, -1, -1, -1, 
+	15,  6,  2, 16,  17, -1, 20, 18,  22, 19, 21, -1,  -1, -1, -1, -1, 
 	-1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1,
 	-1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1,  -1, -1, -1, -1, 
 
@@ -291,10 +291,12 @@ const float VTML17[17] = {0.6642,0.7504,0.6810,0.7317,0.7073,0.7192,0.7316,0.785
 const float VTML18[18] = {0.9060,0.8585,0.9190,0.9819,0.9664,0.9587,1.0000,0.9155,0.7479,0.7842,0.7458,0.8949,0.8442,0.5631,0.9058,0.8693,0.9481,0.0000};
 const float VTML19[19] = {0.8325,0.8124,0.7823,0.9091,0.7224,0.8434,0.8395,0.9202,0.5793,0.7817,0.7294,0.8390,0.7774,0.4503,0.9383,0.7878,0.8191,0.5185,0.2835};
 const float VTML20[20] = {0.6899,0.8446,0.8481,0.8788,0.6637,0.8074,0.8328,0.8929,0.8311,0.5223,0.6212,0.8280,0.6316,0.7259,0.8230,0.7867,0.7058,0.8823,0.8005,0.4940};
-const float VTML21[21] = {0.7402,0.7562,0.5107,0.4901,0.8510,0.6728,0.6142,0.7148,0.6759,0.9074,0.9144,0.6864,0.8551,0.9392,0.7659,0.6722,0.7064,0.9504,0.8457,0.8635,0.5004};
-const float VTML22[22] = {0.7318,0.6813,0.6769,0.6101,0.8749,0.5335,0.5286,0.7768,0.6732,0.8594,0.8344,0.6279,0.7962,0.8964,0.7357,0.7062,0.7254,0.9794,0.8415,0.8201,0.6435,0.5310};
-const float VTML23[23] = {0.7325,0.7497,0.7384,0.7748,0.7595,0.7339,0.7571,0.8000,0.7156,0.7680,0.7649,0.7437,0.7450,0.7672,0.7745,0.7258,0.7310,0.8105,0.7483,0.7555,0.7566,0.7455,0.7548};
-const float VTML24[24] = {1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,0.6553};
+const float VTML21[21] = {0.7402,0.7562,0.5107,0.4901,0.8510,0.6728,0.6142,0.7148,0.6759,0.9074,0.9144,0.6864,0.8551,0.9392,0.7659,0.6722,0.7064,0.9504,0.8457,0.8635,0.757};
+const float VTML22[22] = {0.7318,0.6813,0.6769,0.6101,0.8749,0.5335,0.5286,0.7768,0.6732,0.8594,0.8344,0.6279,0.7962,0.8964,0.7357,0.7062,0.7254,0.9794,0.8415,0.8201,0.6435,0.7406};
+const float VTML23[23] = {25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,24.99};
+/*const float VTML23[23] = {0.7325,0.7497,0.7384,0.7748,0.7595,0.7339,0.7571,0.8000,0.7156,0.7680,0.7649,0.7437,0.7450,0.7672,0.7745,0.7258,0.7310,0.8105,0.7483,0.7555,0.7566,0.7455,0.7548};
+ */
+const float VTML24[24] = {1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000,1.0000};
 /*const float VTML1[1] = {0.524850589217488};
 const float VTML2[2] = {0.771779427489543,0.395828794471702};
 const float VTML3[3] = {0.735157777517306,0.708385895998768,0.441430328518418};
@@ -360,8 +362,11 @@ float GetWeight(int lengthOfWord, int offset){
         for(int i = 0;i < lengthOfWord;i++){
 
             if (offset == halflen)
-                weights[i] = 1.0 / normalizer;
+                weights[i] = 2.0 / normalizer;
             weights[i] = (double)pow(aarho,abs(halflen - i)) / normalizer;
+        }
+        for (int i = 0; i < lengthOfWord;i++){
+            printf("%f\n",weights[i]);
         }
     }
     return weights[offset];
@@ -382,7 +387,9 @@ void readinweights(int lengthOfWord,const char* filename){
     readweights = (double*) malloc(sizeof(double) * lengthOfWord);
     for (int i = 0;i < lengthOfWord;i++){
         fscanf(infile,"%lf",&readweights[i]);
+        printf("weight %d = %f\n",i,readweights[i]);
     }
+    printf ("finished weighting\n");
 }
 
 void readDistanceFunction(char* filename,int type){
@@ -818,20 +825,129 @@ float WeightedWordDist( const Pointer pp, const Pointer qq ){
   
   return result;  
 }
+float WeightedWordDist2( const Pointer pp, const Pointer qq ){
+  char* ww = *( (word*) pp );
+  char* vv = *( (word*) qq );
 
+  int word_length1 = strlen( ww );
+  int word_length2 = strlen( vv );
+  int word_length = word_length1 < word_length2 ? word_length1 : word_length2;
+  
+//  printf("wordlen: %d",word_length);
+ 
+  //const float* weight = weights[ word_length ]; 
+
+  int res_w, res_v;
+  float result = 0.0;
+
+  int ii = 0;  
+  while(ii < word_length && ww[ii] != '_' && vv[ii] != '_'){
+    res_w = ResidueToInt[ (int) ww[ii] ];
+    res_v = ResidueToInt[ (int) vv[ii] ];
+    /*
+      printf("%c",ww[ii]);
+      printf("%c%d%d%d\n",vv[ii],ii,res_w,res_v);
+      */
+    
+    if( res_w == -1 ){
+      fprintf( stderr, "Invalid resdiue %c in word %s. Aborting index: %i, w, word_length: %i \n", ww[ii], ww, ii, word_length);
+      Halt();
+    }
+
+    if( res_v == -1 ){
+      fprintf( stderr, "Invalid resdiue %c in word %s. Aborting index: %i, v, word_length: %i \n", vv[ii], vv, ii, word_length);
+      Halt();
+    }
+    
+    if(res_w >= res_v)
+      result += GetWeightRead(word_length,ii) * VTML200[ res_w ][ res_v ];
+    else
+      result += GetWeightRead(word_length,ii) * VTML200[ res_v ][ res_w ];
+      /*result += weight[ii] * VTML200[ res_v ][ res_w ];*/
+    ++ii;
+  }
+  
+  return result;  
+}
+
+float secdist[7][7] = {{0,1,1,.5,.5,1,.66666666},{1,0,1,.5,1,.5,.666666666},{1,1,0,1,.5,.5,.666666666},{.5,.5,1,.5,.75,.75,.666666666666},{.5,1,.5,.75,.5,.75,.666666666666},{1,.5,.5,.75,.75,.5,.66666666666},{.666666666666,.666666666666,.666666666666,.66666666666,.66666666666,.66666666666,.66666666666}};
+
+float SecondaryDist( const Pointer pp, const Pointer qq ){
+    float aaresult = WeightedWordDist2(pp,qq);
+  char* ww = *( (word*) pp );
+  char* vv = *( (word*) qq );
+
+  int word_length1 = strlen( ww );
+  int word_length2 = strlen( vv );
+  int word_length = word_length1 < word_length2 ? word_length1 : word_length2;
+  
+  int res_w, res_v;
+  float result = 0.0;
+
+  int ii = 0;  
+  while(ii < word_length && ww[ii] != '_' && vv[ii] != '_'){
+      ++ii;
+  }
+  ++ii;
+  while(ii < word_length && ww[ii] != '_' && vv[ii] != '_'){
+    res_w = (int) ww[ii] - 65;
+    res_v = (int) vv[ii] - 65;
+    
+    
+    if (res_w == 25 || res_v == 25)
+        result += 25;
+    else
+        result += secdist[ res_v ][ res_w ];
+    ++ii;
+  }
+  
+  return result + 0.5 * aaresult;  
+}
+float SecondaryDist2( const Pointer pp, const Pointer qq ){
+  char* ww = *( (word*) pp );
+  char* vv = *( (word*) qq );
+
+  int word_length1 = strlen( ww );
+  int word_length2 = strlen( vv );
+  int word_length = word_length1 < word_length2 ? word_length1 : word_length2;
+  
+  int res_w, res_v;
+  float result = 0.0;
+
+  int ii = 0;  
+  while(ii < word_length && ww[ii] != '_' && vv[ii] != '_'){
+      ++ii;
+  }
+  ++ii;
+  while(ii < word_length && ww[ii] != '_' && vv[ii] != '_'){
+    res_w = (int) ww[ii] - 65;
+    res_v = (int) vv[ii] - 65;
+    
+    
+    if (res_w == 25 || res_v == 25)
+        result += 25;
+    else
+        result += secdist[ res_v ][ res_w ];
+    ++ii;
+  }
+  
+  return result;  
+}
 float wordDist2Alpha(const Pointer p, const Pointer q) {
 	char *w = *((word*) p);
 	char *v = *((word*) q);
 
-	int lengthOfWord = strlen(w);
+	int lengthOfWord1 = strlen(w);
+	int lengthOfWord2 = strlen(v);
+    int lengthOfWord = lengthOfWord1 < lengthOfWord2 ? lengthOfWord1 : lengthOfWord2;
 
 	double result = 0.0;
 
     if (a1[0][0] == -1){
         readDistanceFunction(alphadf,0);
     }
-	int i;
-	for (i = 0; i < lengthOfWord; i++) {
+	int i = 0;
+	while (i < lengthOfWord && w[i] != '_' && v[i] != '_') {
 		int residueW, residueV;
 
 		residueW = rtoi[(int) w[i]] - 1;	/* adjust for 0-indexed arrays! (such as the substitution scores) */
@@ -863,6 +979,7 @@ float wordDist2Alpha(const Pointer p, const Pointer q) {
 		case 22: result += a23[residueW][residueV]; break;
 		default: break;
 		}
+        ++i;
 	}
 
 	return (float) result - shift;
@@ -871,15 +988,17 @@ float wordDist2Coil(const Pointer p, const Pointer q) {
 	char *w = *((word*) p);
 	char *v = *((word*) q);
 
-	int lengthOfWord = strlen(w);
+	int lengthOfWord1 = strlen(w);
+	int lengthOfWord2 = strlen(v);
+    int lengthOfWord = lengthOfWord1 < lengthOfWord2 ? lengthOfWord1 : lengthOfWord2;
 
 	double result = 0.0;
 
     if (c1[0][0] == -1){
         readDistanceFunction(coildf,2);
     }
-	int i;
-	for (i = 0; i < lengthOfWord; i++) {
+	int i = 0;
+	while (i < lengthOfWord && w[i] != '_' && v[i] != '_') {
 		int residueW, residueV;
 
 		residueW = rtoi[(int) w[i]] - 1;	/* adjust for 0-indexed arrays! (such as the substitution scores) */
@@ -911,6 +1030,7 @@ float wordDist2Coil(const Pointer p, const Pointer q) {
 		case 22: result += c23[residueW][residueV]; break;
 		default: break;
 		}
+        ++i;
 	}
 
 	return (float) result - shift;
@@ -968,15 +1088,17 @@ float wordDist2Beta(const Pointer p, const Pointer q) {
 	char *w = *((word*) p);
 	char *v = *((word*) q);
 
-	int lengthOfWord = strlen(w);
+	int lengthOfWord1 = strlen(w);
+	int lengthOfWord2 = strlen(v);
+    int lengthOfWord = lengthOfWord1 < lengthOfWord2 ? lengthOfWord1 : lengthOfWord2;
 
     if (b1[0][0] == -1){
         readDistanceFunction(betadf,1);
     }
 	double result = 0.0;
 
-	int i;
-	for (i = 0; i < lengthOfWord; i++) {
+	int i = 0;
+	while (i < lengthOfWord && w[i] != '_' && v[i] != '_') {
 		int residueW, residueV;
 
 		residueW = rtoi[(int) w[i]] - 1;	/* adjust for 0-indexed arrays! (such as the substitution scores) */
@@ -1007,7 +1129,9 @@ float wordDist2Beta(const Pointer p, const Pointer q) {
 		case 21: result += b22[residueW][residueV]; break;
 		case 22: result += b23[residueW][residueV]; break;
 		default: break;
+
 		}
+        ++i;
 	}
 
 	return (float) result - shift;
