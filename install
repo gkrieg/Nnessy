@@ -14,8 +14,9 @@ unzip alpha.tree.zip
 unzip coil.tree.zip
 echo "Building matcher"
 cd ..
-for i in 1 2 3 4 5 6 7 8 9; do
-    cat segment$i >> matcher.txt
+for i in 1 2; do
+    cat segment$i >> matcher.zip
     #rm segment$i
 done
+unzip matcher.zip
 
