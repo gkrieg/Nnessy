@@ -62,6 +62,9 @@ echo "end ss"
 python overlappingwords.py ${tag}/${seq}.knn ${tag}/${seq}.probs $tag $k 
 python eightoverlappingwords.py ${tag}/${seq}.knnss ${tag}/${seq}.probs8 $tag $k 
 echo "done overlapping"
+python accuracyestimator.py ${tag}/${seq}.probs_d 3state $OUTPUT
+python accuracyestimator.py ${tag}/${seq}.probs_d 8state $OUTPUT
+
 python dynamicprogramming.py ${tag}/${seq}.probs $OUTPUT 3
 python dynamicprogramming.py ${tag}/${seq}.probs8 $OUTPUT 8
 echo "writing output"
