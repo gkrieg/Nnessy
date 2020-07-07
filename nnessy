@@ -45,10 +45,10 @@ python split.py $seq
 seq=${seq}.seq
 #echo "finding identities"
 #python getSecondaryStructure.py $seq ${tag}/${seq}.idents $seq $k
-python splitfile.py $seq $numthreads
+python3 splitfile.py $seq $numthreads
 echo "started knn"
 for i in `seq 0 $lownumthreads`; do
-    ./lpgenerator PredictProteinKnnCoil alpha.words beta.words other.words ${seq}_${i} $lenwords ${tag}/${seq}.knn_${i} $k $firstitr &
+    ./lpgenerator PredictProteinKnnCoil 23 alpha.words beta.words other.words ${seq}_${numthreads}_${i} $lenwords ${tag}/${seq}.knn_${i} $k $firstitr 7 &
 done
 wait
 echo "end knn"
