@@ -72,7 +72,6 @@ MetricSpace* CreateMetricSpace( char* space_type, FILE* datastream ){
     rr = WordReader;
     ms->dist = WordDist;
     ms->point_size = sizeof( word );
-    printf("word size is: %zu\n",ms->point_size);
 
     ms->toString = WordToString;
     break;
@@ -145,7 +144,6 @@ MetricSpace** CreateMetricSpaces( char* space_type, FILE* datastream, int num_sp
         rr = WordReader;
         ms->dist = WordDist;
         ms->point_size = sizeof( word );
-        printf("word size is: %zu\n",ms->point_size);
 
         ms->toString = WordToString;
         break;
