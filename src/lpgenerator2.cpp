@@ -55,7 +55,6 @@ void lpGenerator::predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* Co
       string weightsfilename = "weights/weights" + to_string(rand) + ".txt";
       readinweights(this->lengthOfWord,weightsfilename.c_str());
       if (ss){
-          cout << "using SecondaryDist" << endl;
           alphadistfunc = SecondaryDist2;
           betadistfunc = SecondaryDist2;
           coildistfunc = SecondaryDist2;
@@ -67,11 +66,8 @@ void lpGenerator::predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* Co
           nnfinder1.destroyDTree('A');
           betann = nnfinder4.queryBetaRange(treesize, MSAlpha, &this->BBNeighbors, 1);
           nnfinder4.destroyDTree('B');
-          printf("Destroyed the beta tree\n");
           coilnn = nnfinder7.queryCoilRange(treesize, MSAlpha, &this->CCNeighbors, 1);
-          printf("before Destroyed the coil tree\n");
           nnfinder7.destroyDTree('C');
-          printf("Destroyed the coil tree\n");
          /* 
           nnfinder1.loadDispersionTree(alphaFile, "a.tree", "ass",rand);
           nnfinder4.loadDispersionTree(betaFile, "b.tree","bss",rand);
@@ -88,11 +84,8 @@ void lpGenerator::predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* Co
           nnfinder1.destroyDTree('A');
           nnfinder4.queryBeta(numneighbors, MSAlpha, &this->BBNeighbors, 1);
           nnfinder4.destroyDTree('B');
-          printf("Destroyed the beta tree\n");
           nnfinder7.queryCoil(numneighbors, MSAlpha, &this->CCNeighbors, 1);
-          printf("before Destroyed the coil tree\n");
           nnfinder7.destroyDTree('C');
-          printf("Destroyed the coil tree\n");
       }
   }
   else{
@@ -150,8 +143,6 @@ void lpGenerator::predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* Co
       alphadistfunc = WeightedWordDist2;
       betadistfunc = WeightedWordDist2;
       coildistfunc = WeightedWordDist2;
-      printf("alphann: %d betann: %d coilnn: %d",alphann,betann,coilnn);
-      printf("%s\n",AANeighbors[0][0]);
       for (int i = 0; i < TRSSize; i++) {
           vector<tuple<float,Pointer,float>> v;
           int j = 0;
@@ -164,7 +155,6 @@ void lpGenerator::predictProteinWithKNNCoil(char* AlphaIF, char* BetaIF,char* Co
                //outfile << (char*)MSAlpha->points[i] << " " << (char*)AANeighbors[i][j] << " " << alphadist << " " <<salphadist <<endl;
               j++;
           }
-      printf("finished the alphas\n");
           j = 0;
           while(strcmp((char*)BBNeighbors[i][j],"null") != 0){
                betadist = betadistfunc(MSAlpha->points[i], BBNeighbors[i][j]);

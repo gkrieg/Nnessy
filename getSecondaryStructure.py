@@ -25,9 +25,9 @@ def writess8(filename,outfilename,directorynum):
 
 for i in range(int(sys.argv[4])):
     print(i)
-    fname = sys.argv[1] + str(i) + '.txt'
-    outfname = fname + 'ss'
+    fname = sys.argv[1]
+    outfname = sys.argv[2]
     try:
         writess8(fname,outfname,sys.argv[3])
     except:
-        print('{} did not work'.format(i))
+        print('{} did not work'.format(fname))

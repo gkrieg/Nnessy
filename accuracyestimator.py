@@ -1,4 +1,8 @@
 import sys
+
+def func(x,a,b):
+    return a * x + b
+
 def getdistacc(a,b,c,d,val,e):
     return func(val*100,a,b)/100 if val * 100 < e else func(val*100,c,d)/100
 
@@ -28,4 +32,4 @@ def getestimatedist(f,prefix,returnarray=False):
 accs = getestimatedist(open(sys.argv[1],'r').readlines(),sys.argv[2])
 
 output = open(sys.argv[3] + 'est' + sys.argv[2][0],'w')
-output.write(sum(accs)/len(accs))
+output.write(str(accs))

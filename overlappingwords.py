@@ -174,22 +174,15 @@ def process_args():
     parser.add_argument("outputf", help="the output filename to which you want to write the class-membership probabilities", type=str, default="outtt")
     parser.add_argument("dirnum", help="the directory number", type=str, default='1')
     parser.add_argument("k", help="the number of neighbors to look at", type=int,default=3)
-    parser.add_argument("-l", help="flag for generating logistic curves", action='store_true')
-    parser.add_argument("count", type=int,default=292)
     args = parser.parse_args()
     print('k = {}'.format(args.k))
-    for i in range(args.count):
-        inputf = '{}{}.txt'.format(args.inputf,i)
-        outputf = '{}{}'.format(args.outputf,i)
-        if args.l == True:
-            writeLogisticCurves2(args.inputf,args.outputf,args.dirnum)
-        else:
-            try:
-                get_probs(inputf,outputf,args.dirnum,args.k)
-            except Exception as e:
-                print(i)
-                print(e)
-                traceback.print_exc()
+    inputf = '{}'.format(args.inputf)
+    outputf = '{}'.format(args.outputf)
+    try:
+        get_probs(inputf,outputf,args.dirnum,args.k)
+    except Exception as e:
+        print(e)
+        traceback.print_exc()
 
             
 process_args()

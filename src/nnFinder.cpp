@@ -12,8 +12,6 @@ extern "C" {
 	#include "dispersionTree.h"
 	#include "metricspaces.h"
 #include "word.h"
-//#include "alphasubstitutionScores.h"
-//#include "betasubstitutionScores.h"
 }
 const char* residue = "ARNDCQEGHILKMFPSTWYVBZX-";
 
@@ -41,7 +39,6 @@ void nnFinder::makeDispersionTree(FILE *queriedWords, string type, int num, bool
         copy(input.begin(), input.end(), inputtype);
         inputtype[input.size()] = '\0';
 	MetricSpace *MSQueriedWords = CreateMetricSpace(inputtype, queriedWords);
-    cout << "printing out the word" << (char*) MSQueriedWords->points[2];
     string alphadfstring = "dfs/alphadis" + to_string(rand) + ".h";
     string betadfstring = "dfs/betadis" + to_string(rand) + ".h";
     string coildfstring = "dfs/coildis" + to_string(rand) + ".h";
@@ -56,12 +53,10 @@ void nnFinder::makeDispersionTree(FILE *queriedWords, string type, int num, bool
     cdf[coildfstring.size()] = '\0';
     //alphadf = adf;
     //betadf = bdf;
-    cout << endl << "setting distance functions with rand = " << rand << endl;
     if (!firstIteration){
         setdfs(adf,bdf);
         int cset = setcoildf(cdf);
     }
-    cout << "done setting distance functions" << endl;
 	if (type == "alpha"){
 		if (!firstIteration)
 		    MSQueriedWords->dist = wordDist2Alpha;
@@ -181,11 +176,8 @@ void nnFinder::loadDispersionTree(FILE *queriedWords, string filenamestring, str
     cdf[coildfstring.size()] = '\0';
     //alphadf = adf;
     //betadf = bdf;
-    cout << endl << "setting distance functions with rand = " << rand << endl;
     setdfs(adf,bdf);
     int cset = setcoildf(cdf);
-    cout << endl << "cset " << cset << endl;
-    cout << "done setting distance functions" << endl;
 	if (type == "alpha"){
 		MSQueriedWords->dist = wordDist2Alpha;
 		AlphaDT = readDispersionTreeFromFile(MSQueriedWords->points, MSQueriedWords->dist, MSQueriedWords->numpoints, filename);
@@ -278,7 +270,6 @@ void nnFinder::saveDispersionTree(char* filename, string type){
 }
 void nnFinder::queryAlpha(int numNeighbors, MetricSpace *MS, Pointer*** AllNeighbors, int treenum){
 	const int nump = MS->numpoints;
-	cout << "numpoints alpha is " << nump << endl;
 	(*AllNeighbors) = new Pointer*[nump];
 	for (int numrows = 0; numrows < nump; numrows++){
 		(*AllNeighbors)[numrows] = new Pointer[numNeighbors];
@@ -298,12 +289,10 @@ void nnFinder::queryAlpha(int numNeighbors, MetricSpace *MS, Pointer*** AllNeigh
 			num = knnSearch(AlphaDT3, words[i], numNeighbors, (*AllNeighbors)[i]);
 
 	}
-	cout << i << endl << num << endl;
 
 }
 int nnFinder::queryAlphaRange(int sizeTree, MetricSpace *MS, Pointer*** AllNeighbors, int treenum){
 	const int nump = MS->numpoints;
-	cout << "numpoints alpha is " << nump << endl;
 	(*AllNeighbors) = new Pointer*[nump];
 	for (int numrows = 0; numrows < nump; numrows++){
 		(*AllNeighbors)[numrows] = new Pointer[sizeTree];
@@ -316,8 +305,6 @@ int nnFinder::queryAlphaRange(int sizeTree, MetricSpace *MS, Pointer*** AllNeigh
 		if (treenum == 1){
 			num = rangeSearch(AlphaDT, words[i], 5, (*AllNeighbors)[i]);
             (*AllNeighbors)[i][num] = nullstring;
-            //char* neighb = (char*) (AllNeighbors[i][0]);
-            //printf("%s %s",(char*) words[i],neighb);
             }
 		else if (treenum == 2){
 			num = rangeSearch(AlphaDT2, words[i], 5, (*AllNeighbors)[i]);
@@ -329,7 +316,6 @@ int nnFinder::queryAlphaRange(int sizeTree, MetricSpace *MS, Pointer*** AllNeigh
     }
 
 	}
-	cout << i << endl << num << endl;
     return num;
 
 }
@@ -347,8 +333,6 @@ int nnFinder::queryBetaRange(int sizeTree, MetricSpace *MS, Pointer*** AllNeighb
 		if (treenum == 1){
 			num = rangeSearch(BetaDT, words[i], 5, (*AllNeighbors)[i]);
             (*AllNeighbors)[i][num] = nullstring;
-            //char* neighb = (char*) (AllNeighbors[i][0]);
-            //printf("%s %s",(char*) words[i],neighb);
             }
 		else if (treenum == 2){
 			num = rangeSearch(BetaDT2, words[i], 5, (*AllNeighbors)[i]);
@@ -360,7 +344,6 @@ int nnFinder::queryBetaRange(int sizeTree, MetricSpace *MS, Pointer*** AllNeighb
         }
 
 	}
-	cout << i << endl << num << endl;
     return num;
 
 }
@@ -391,13 +374,11 @@ int nnFinder::queryCoilRange(int sizeTree, MetricSpace *MS, Pointer*** AllNeighb
         }
 
 	}
-	cout << i << endl << num << endl;
     return num;
 
 }
 void nnFinder::queryCoil(int numNeighbors, MetricSpace *MS, Pointer*** AllNeighbors, int treenum){
 	const int nump = MS->numpoints;
-	cout << "numpoints coil is " << nump << endl;
 	(*AllNeighbors) = new Pointer*[nump];
 	for (int numrows = 0; numrows < nump; numrows++){
 		(*AllNeighbors)[numrows] = new Pointer[numNeighbors];
@@ -409,12 +390,10 @@ void nnFinder::queryCoil(int numNeighbors, MetricSpace *MS, Pointer*** AllNeighb
         num = knnSearch(CoilDT, words[i], numNeighbors, (*AllNeighbors)[i]);
 
 	}
-	cout << i << endl << num << endl;
 
 }
 void nnFinder::queryBeta(int numNeighbors, MetricSpace *MS, Pointer*** AllNeighbors, int treenum){
 	const int nump = MS->numpoints;
-	cout << "numpoints is " << nump << endl;
 	(*AllNeighbors) = new Pointer*[nump];
 	for (int numrows = 0; numrows < nump; numrows++){
 		(*AllNeighbors)[numrows] = new Pointer[numNeighbors];
@@ -431,472 +410,5 @@ void nnFinder::queryBeta(int numNeighbors, MetricSpace *MS, Pointer*** AllNeighb
 			num = knnSearch(BetaDT3, words[i], numNeighbors, (*AllNeighbors)[i]);
 
 	}
-	cout << i << endl << num << endl;
 }
 
-/*void nnFinder::printDFs(){
-    int length = 22;
-    cout << "a1{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a1[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a2{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a2[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a3{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a3[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a4{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a4[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a5{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a5[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a6{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a6[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a7{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a7[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a8{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a8[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a9{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a9[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a10{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a10[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a11{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a11[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a12{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a12[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a13{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a13[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a14{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a14[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a15{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a15[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a16{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a16[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a17{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a17[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a18{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a18[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a19{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a19[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a20{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a20[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a21{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a21[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a22{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a22[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "a23{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << a23[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl << endl;
-    cout << "bset now:" << endl;
-    cout << "b1{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b1[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b2{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b2[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b3{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b3[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b4{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b4[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b5{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b5[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b6{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b6[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b7{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b7[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b8{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b8[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b9{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b9[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b10{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b10[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b11{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b11[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b12{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b12[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b13{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b13[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b14{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b14[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b15{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b15[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b16{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b16[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b17{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b17[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b18{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b18[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b19{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b19[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b20{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b20[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b21{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b21[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b22{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b22[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    cout << "b23{";
-    for (int i = 0; i < length; i++){
-        cout << residue[i] << " ";
-        for (int j = 0; j < length; j++){
-            cout << residue[j] << " ";
-            cout << b23[i][j] << ",";
-        }
-        cout << endl;
-    }
-    cout << "}" << endl;
-    printepsilon();
-}
-*/

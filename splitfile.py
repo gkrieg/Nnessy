@@ -5,6 +5,7 @@ numsplits = int(argv[2])
 
 fileit = 1
 splitsize = (len(infile) - 1) // numsplits
+
 leftover = (len(infile) - 1 ) % numsplits
 i = 1
 n = 0
