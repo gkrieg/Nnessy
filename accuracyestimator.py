@@ -31,5 +31,5 @@ def getestimatedist(f,prefix,returnarray=False):
 
 accs = getestimatedist(open(sys.argv[1],'r').readlines(),sys.argv[2])
 
-output = open(sys.argv[3] + 'est' + sys.argv[2][0],'w')
+output = open(sys.argv[3],'w')
 output.write(str(accs))
