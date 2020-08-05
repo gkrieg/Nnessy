@@ -8,6 +8,8 @@ make
 mv lpgenerator ../
 cd ..
 echo "Unzipping larger files"
+unzip alpha.words.zip
+unzip beta.words.zip
 unzip other.words.zip
 cd trees
 unzip alpha.tree.zip
