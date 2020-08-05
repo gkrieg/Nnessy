@@ -39,7 +39,7 @@ if [ -z ${seq+x} ]; then
 fi
 iseq=$seq
 if [ -z ${OUTPUT+x} ]; then
-    OUTPUT=${tag}/${iseq}.ss
+    OUTPUT=output
 fi
 python split.py $seq
 finaloutput=$seq
