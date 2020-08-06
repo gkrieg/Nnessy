@@ -217,6 +217,59 @@ def fillmatrixlength8(transition):
 
     return matrix
 
+def backtrack3(matrix):
+    numclasses = len(matrix[0])
+    maxhistories = [len(matrix[0][k]) for k in range(numclasses)]
+    minrunlens = [3,1,1]
+    letteranswer = [' ' for i in range(len(matrix))]
+    numberanswer = [0 for i in range(len(matrix))]
+    lasts = [max(matrix[-1][k][:]) for k in range(numclasses)]
+    letters = ['A','B','C']
+    neginf = -1000000
+
+    maxlast = max(lasts)
+    maxindex = lasts.index(maxlast)
+    letter = letters[maxindex]
+    number = matrix[-1][maxindex][:].index(maxlast)
+
+    letteranswer[-1] = letter
+    numberanswer[-1] = number
+
+    rangeiterator = number
+    rangeletter = letteranswer[-1]
+    maxhistoryhit = False
+
+    for i in range(len(matrix) - 2,-1,-1):
+        letternum = letters.index(letteranswer[i+1])
+        if numberanswer[i+1] > 0:
+            if numberanswer[i+1] == maxhistories[letternum] - 1:
+                maxhistoryhit = True
+
+            if maxhistoryhit == True:
+                if numberanswer[i+1] == minrunlens[letternum] - 1:
+                    letteranswer[i] = letteranswer[i+1]
+                    maxval = max(matrix[i][letternum][:])
+                    numberanswer[i] = matrix[i][letternum][:].index(maxval)
+                    maxhistoryhit = False
+                else:
+                    letteranswer[i] = letteranswer[i+1]
+                    numberanswer[i] = numberanswer[i+1] - 1
+            else:
+                letteranswer[i] = letteranswer[i+1]
+                numberanswer[i] = numberanswer[i+1] - 1
+        else:
+            othervals = []
+            for j in range(len(letters)):
+                if j == letternum:
+                    othervals.append(neginf)
+                else:
+                    othervals.append(max(matrix[i][j][:]))
+            maxothervalue = max(othervals)
+            letteranswer[i] = letters[othervals.index(maxothervalue)]
+            numberanswer[i] = matrix[i][othervals.index(maxothervalue)][:].index(maxothervalue)
+
+    return ''.join(letteranswer)
+
 
 
 def backtrack8(matrix):
@@ -261,7 +314,7 @@ def backtrack8(matrix):
                 numberanswer[i] = numberanswer[i+1] - 1
         else:
             othervals = []
-            for j in range(8):
+            for j in range(len(letters)):
                 if j == letternum:
                     othervals.append(neginf)
                 else:
@@ -272,93 +325,6 @@ def backtrack8(matrix):
 
     return ''.join(letteranswer)
 
-def backtrack(matrix):
-    maxAhistory = 39
-    maxBhistory = 28
-    maxChistory = 29
-    minArun = 3
-    minBrun = 3
-    minCrun = 1
-    letteranswer = [' ' for i in range(len(matrix))]
-    numberanswer = [' ' for i in range(len(matrix))]
-    lastA = max(matrix[-1][0][:])
-    lastB = max(matrix[-1][1][:])
-    lastC = max(matrix[-1][2][:])
-
-    if lastA >= lastB and lastA >= lastC:
-        letter = 'A'
-        number = matrix[-1][0][:].index(lastA)
-    elif lastB >= lastC:
-        letter = 'B'
-        number = matrix[-1][1][:].index(lastB)
-    else:
-        letter = 'C'
-        number = matrix[-1][2][:].index(lastC)
-    letteranswer[-1] = letter
-    numberanswer[-1] = number
-
-    rangeiterator = 0
-    rangeletter = letteranswer[-1]
-
-    for i in range(len(matrix) - 2,-1,-1):
-        if rangeiterator > 0:
-            letteranswer[i] = letteranswer[i+1]
-            numberanswer[i] = numberanswer[i+1]
-            rangeiterator -= 1
-            continue
-        if rangeletter == 'A':
-            if numberanswer[i+1] in range(minArun,maxAhistory):
-                number = numberanswer[i+1] - 1
-                letter = 'A'
-                rangeletter = 'A'
-            elif numberanswer[i+1] == minArun - 1:
-                rangeiterator = minArun - 1
-                letter = 'A'
-                betavalue = max(matrix[i-minArun][1][:])
-                coilvalue = max(matrix[i-minArun][2][:])
-                if betavalue >= coilvalue:
-                    rangeletter = 'B'
-                    number = matrix[i-minArun][1][:].index(betavalue) + 1
-                else:
-                    rangeletter = 'C'
-                    number = matrix[i-minArun][2][:].index(coilvalue) + 1
-        elif rangeletter == 'B':
-            if numberanswer[i+1] in range(minBrun,maxBhistory):
-                number = numberanswer[i+1] - 1
-                letter = 'B'
-                rangeletter = 'B'
-            elif numberanswer[i+1] == minBrun - 1:
-                rangeiterator = minBrun - 1
-                letter = 'B'
-                alphavalue = max(matrix[i-minBrun][0][:])
-                coilvalue = max(matrix[i-minBrun][2][:])
-                if alphavalue >= coilvalue:
-                    rangeletter = 'A'
-                    number = matrix[i-minBrun][0][:].index(alphavalue) + 1
-                else:
-                    rangeletter = 'C'
-                    number = matrix[i-minBrun][2][:].index(coilvalue) + 1
-        elif rangeletter == 'C':
-            if numberanswer[i+1] in range(minCrun,maxChistory):
-                rangeiterator = minCrun - 1
-                number = numberanswer[i+1] - 1
-                letter = 'C'
-                rangeletter = 'C'
-            elif numberanswer[i+1] == minCrun - 1:
-                letter = 'C'
-                alphavalue = max(matrix[i-minCrun][0][:])
-                betavalue = max(matrix[i-minCrun][1][:])
-                if alphavalue >= betavalue:
-                    rangeletter = 'A'
-                    number = matrix[i-minCrun][0][:].index(alphavalue) + 1
-                else:
-                    rangeletter = 'B'
-                    number = matrix[i-minCrun][1][:].index(betavalue) + 1
-            
-        letteranswer[i] = letter
-        numberanswer[i] = number
-
-    return ''.join(letteranswer)
 
 import sys
 if sys.argv[1] == 'h':
@@ -380,7 +346,7 @@ try:
         answer = backtrack8(matrix)
     else:
         matrix = fillmatrixlength(transitions)
-        answer = backtrack(matrix)
+        answer = backtrack3(matrix)
 except:
     print(traceback.format_exc())
     a,b,c = sys.exc_info()
