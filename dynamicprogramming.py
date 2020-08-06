@@ -224,7 +224,7 @@ def backtrack3(matrix):
     letteranswer = [' ' for i in range(len(matrix))]
     numberanswer = [0 for i in range(len(matrix))]
     lasts = [max(matrix[-1][k][:]) for k in range(numclasses)]
-    letters = ['A','B','C']
+    letters = ['H','E','C']
     neginf = -1000000
 
     maxlast = max(lasts)
