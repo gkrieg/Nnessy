@@ -353,19 +353,20 @@ void setShift(float s){
 float GetWeight(int lengthOfWord, int offset){
     int halflen = lengthOfWord / 2;
     if (normalizer == 0){
-        for (int i=0;i < lengthOfWord;i++)
+	int i = 0;
+        for (i=0;i < lengthOfWord;i++)
             normalizer += pow(aarho,abs(halflen - i));
     }
     /*float normalizer = 2 * (1 - pow(aarho,((lengthOfWord + 1.0) / 2.0))) / (1.0 - aarho);*/
     if (weights == NULL){
         weights = (double*)malloc(sizeof(double) * lengthOfWord);
-        for(int i = 0;i < lengthOfWord;i++){
+        for(i = 0;i < lengthOfWord;i++){
 
             if (offset == halflen)
                 weights[i] = 2.0 / normalizer;
             weights[i] = (double)pow(aarho,abs(halflen - i)) / normalizer;
         }
-        for (int i = 0; i < lengthOfWord;i++){
+        for (i = 0; i < lengthOfWord;i++){
             printf("%f\n",weights[i]);
         }
     }
@@ -385,7 +386,8 @@ void readinweights(int lengthOfWord,const char* filename){
     if (infile == NULL)
         printf("weight file %s could not be read\n", filename);
     readweights = (double*) malloc(sizeof(double) * lengthOfWord);
-    for (int i = 0;i < lengthOfWord;i++){
+    int i = 0;
+    for (i = 0;i < lengthOfWord;i++){
         fscanf(infile,"%lf",&readweights[i]);
     }
 }
